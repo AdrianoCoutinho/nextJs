@@ -3,11 +3,17 @@ import { useRef, useState } from "react";
 const Camera = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [error, setError] = useState<string>();
+  const constraints = {
+    audio: false,
+    video: {
+      facingMode: { exact: "environment" },
+    },
+  };
 
   const handleStartCamera = async () => {
     try {
       // Solicita permissão para acessar a câmera do dispositivo
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
       // Exibe o stream de vídeo no elemento <video>
       if (videoRef.current) {
